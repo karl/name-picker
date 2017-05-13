@@ -5,6 +5,6 @@
 * Store names in query string.
 * Animate shuffle.
 * Robot faces.
-* Fixed Domain.
+* Nicer Domain.
 * Deploy script.
 * Favicon.
