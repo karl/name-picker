@@ -25,6 +25,18 @@
   font-size: 3rem;
 }
 
+.Name {
+  display: none;
+
+  img {
+    display: block;
+  }
+}
+
+.Selected {
+  display: block;
+}
+
 .NoNames {
   color: #aaa;
 }
@@ -52,6 +64,7 @@
 
 .TextArea {
   font-size: 1rem;
+  line-height: 1.4;
   width: 100%;
-  min-height: 10rem;
+  min-height: 20rem;
 }

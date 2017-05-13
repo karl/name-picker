@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import createBrowserHistory from 'history/createBrowserHistory'
+import createBrowserHistory from 'history/createBrowserHistory';
+import md5 from 'md5';
 import './App.css';
 
 const divider = '|';
@@ -19,6 +20,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         names: action.payload,
+        selectedName: null,
       };
 
     case 'SHUFFLE':
@@ -61,6 +63,16 @@ const NameInput = ({ value, onChange }) => {
   );
 };
 
+const Name = ({ name, isSelected }) => {
+  const hash = md5(name);
+  return (
+    <div className={`Name ${isSelected ? 'Selected' : ''}`}>
+      <img src={`//robohash.org/${hash}.png?set=set1`} alt="" />
+      {name}
+    </div>
+  );
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -88,8 +100,9 @@ class App extends Component {
                 <div className="Hint">Click Shuffle to pick a name</div>
               </div>}
             {names.length > 0 &&
-              selectedName !== null &&
-              <div className="Name">{selectedName}</div>}
+              names.map((name, i) => (
+                <Name key={i} name={name} isSelected={selectedName === name} />
+              ))}
           </div>
           <button
             className="Shuffle"

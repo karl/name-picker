@@ -5,6 +5,7 @@
   "dependencies": {
     "firebase-tools": "^3.7.0",
     "history": "^4.6.1",
+    "md5": "^2.2.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "serve": "^5.1.5"
