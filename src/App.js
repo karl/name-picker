@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import createBrowserHistory from 'history/createBrowserHistory'
 import './App.css';
 
+const divider = '|';
+
+const history = createBrowserHistory();
+const namesParam = window.location.search.substring('?names='.length);
+const initialNames = namesParam.split(divider);
+
 const initialState = {
-  names: [],
+  names: initialNames,
   selectedName: null,
 };
 
@@ -28,6 +35,18 @@ const reducer = (state = initialState, action) => {
 };
 
 const INIT_ACTION = { type: '@@INIT' };
+
+const shuffle = () => {
+  return { type: 'SHUFFLE' };
+};
+
+const setNames = names => {
+  const path = `?names=${names.join(divider)}`;
+  history.push(path);
+  return { type: 'SET_NAMES', payload: names };
+};
+
+// ---
 
 const NameInput = ({ value, onChange }) => {
   return (
@@ -75,7 +94,7 @@ class App extends Component {
           <button
             className="Shuffle"
             onClick={() => {
-              this.dispatch({ type: 'SHUFFLE' });
+              this.dispatch(shuffle());
             }}
           >
             Shuffle
@@ -85,7 +104,7 @@ class App extends Component {
           <NameInput
             value={names}
             onChange={newNames => {
-              this.dispatch({ type: 'SET_NAMES', payload: newNames });
+              this.dispatch(setNames(newNames));
             }}
           />
         </div>
