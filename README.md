@@ -6,4 +6,5 @@
 * Animate shuffle.
 * Robot faces.
 * Fixed Domain.
-* GitHub project.
+* Deploy script.
+* Favicon.
