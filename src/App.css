@@ -82,6 +82,10 @@ body {
   color: #f5f5f5;
 }
 
+.Shuffle:disabled {
+  opacity: 0.5;
+}
+
 
 .Editor {
   padding: 2rem;

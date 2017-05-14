@@ -145,6 +145,7 @@ class App extends Component {
           </div>
           <button
             className="Shuffle"
+            disabled={names.length === 0}
             onClick={() => {
               this.dispatch(shuffle());
             }}
