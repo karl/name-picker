@@ -1,6 +1,8 @@
-# Name Picker
+# Pickeroo
+
+https://pickeroo.net
 
 ## TODO
 
-* Nicer Domain.
+* Fix string <-> array mapping (empty text, blank lines).
 * Favicon.
