@@ -26,19 +26,42 @@ body {
   font-size: 3rem;
 }
 
-.Name {
-  display: none;
-
-  img {
-    display: block;
-  }
+.Carousel {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin: 0px auto;
+  perspective: 900px;
+  background: #F3E9E3;
 }
 
-.Selected {
-  display: block;
+.CarouselInner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 3s;
+}
+
+.CarouselItem {
+  position: absolute;
+  width: 200px;
+  height: 300px;
+  backface-visibility: hidden;
+}
+
+.Name {
+  display: flex;
+  flex-direction: column;
+}
+
+.Name img {
+  width: 200px;
+  height: 200px;
 }
 
 .NoNames {
+  position: absolute;
   color: #aaa;
 }
 
@@ -49,12 +72,12 @@ body {
 
 .Shuffle {
   cursor: pointer;
-  font-size: 3rem;
+  font-size: 5rem;
   border: none;
   background-color: #197278;
   border: 1px solid #283D3B;
-  min-width: 50%;
-  padding: 0.2rem 1rem;
+  min-width: 30%;
+  padding: 0.1rem;
   margin-top: 2rem;
   color: #f5f5f5;
 }

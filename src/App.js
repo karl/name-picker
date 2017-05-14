@@ -7,11 +7,12 @@ const divider = '|';
 
 const history = createBrowserHistory();
 const namesParam = window.location.search.substring('?names='.length);
-const initialNames = namesParam.split(divider);
+const initialNames = namesParam.length > 0 ? namesParam.split(divider) : [];
 
 const initialState = {
   names: initialNames,
-  selectedName: null,
+  selectedIndex: null,
+  revolutions: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,15 +21,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         names: action.payload,
-        selectedName: null,
+        selectedIndex: null,
+        revolutions: 0,
       };
 
     case 'SHUFFLE':
       const index = Math.floor(Math.random() * state.names.length);
-      const name = state.names[index];
       return {
         ...state,
-        selectedName: name,
+        selectedIndex: index,
+        revolutions: state.revolutions + 1,
       };
 
     default:
@@ -63,6 +65,39 @@ const NameInput = ({ value, onChange }) => {
   );
 };
 
+const Carousel = ({ selectedIndex, revolutions, children }) => {
+  const total = React.Children.count(children);
+  const deg = 720 * revolutions + 360 / total * selectedIndex;
+  const tz = -Math.round((200 + 20) / 2 / Math.tan(Math.PI / total));
+  return (
+    <div className="Carousel">
+      <div
+        className="CarouselInner"
+        style={{ transform: `translateZ(${tz}px) rotateY(${-deg}deg)` }}
+      >
+        {React.Children.map(children, (child, i) => (
+          <CarouselItem key={i} index={i} total={total}>
+            {child}
+          </CarouselItem>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const CarouselItem = ({ index, total, children }) => {
+  const deg = 360 / total * index;
+  const tz = Math.round((200 + 20) / 2 / Math.tan(Math.PI / total));
+  return (
+    <div
+      className="CarouselItem"
+      style={{ transform: `rotateY(${deg}deg) translateZ(${tz}px)` }}
+    >
+      {children}
+    </div>
+  );
+};
+
 const Name = ({ name, isSelected }) => {
   const hash = md5(name);
   return (
@@ -84,25 +119,29 @@ class App extends Component {
   }
 
   render() {
-    const { names, selectedName } = this.state;
+    const { names, selectedIndex, revolutions } = this.state;
     return (
       <div className="App">
         <div className="Picker">
           <div className="Names">
+
             {names.length === 0 &&
               <div className="NoNames">
                 No names
                 <div className="Hint">Scroll down and enter names</div>
               </div>}
-            {names.length > 0 &&
-              selectedName === null &&
-              <div>
-                <div className="Hint">Click Shuffle to pick a name</div>
-              </div>}
-            {names.length > 0 &&
-              names.map((name, i) => (
-                <Name key={i} name={name} isSelected={selectedName === name} />
-              ))}
+
+            <div style={{ opacity: selectedIndex === null ? 0.1 : 1 }}>
+              <Carousel selectedIndex={selectedIndex} revolutions={revolutions}>
+                {names.map((name, i) => (
+                  <Name
+                    key={i}
+                    name={name}
+                    isSelected={selectedIndex === name}
+                  />
+                ))}
+              </Carousel>
+            </div>
           </div>
           <button
             className="Shuffle"
@@ -110,7 +149,7 @@ class App extends Component {
               this.dispatch(shuffle());
             }}
           >
-            Shuffle
+            ↺
           </button>
         </div>
         <div className="Editor">
