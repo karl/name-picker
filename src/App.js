@@ -10,12 +10,7 @@ const history = createBrowserHistory();
 const params = queryString.parse(window.location.search);
 const namesParam = params.names;
 const initialTitle = params.title !== undefined ? params.title : '';
-let initialNames = namesParam !== undefined ? namesParam.split(divider) : [];
-
-// Support old name divider
-if (initialNames.length === 1 && initialNames[0].indexOf('|') !== -1) {
-  initialNames = initialNames[0].split('|');
-}
+const initialNames = namesParam !== undefined ? namesParam.split(divider) : [];
 
 const initialState = {
   title: initialTitle,
