@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import createBrowserHistory from 'history/createBrowserHistory';
 import md5 from 'md5';
 import queryString from 'query-string';
+import NameInput from './NameInput';
+
 import './App.css';
 
 const divider = '•';
@@ -70,19 +72,6 @@ const TitleInput = ({ value, onChange }) => {
       placeholder="Title (optional)"
       value={value}
       onChange={event => onChange(event.target.value)}
-    />
-  );
-};
-
-const NameInput = ({ value, onChange }) => {
-  return (
-    <textarea
-      className="TextArea"
-      placeholder="Enter names, one on each line"
-      value={value.join('\n')}
-      onChange={event => {
-        onChange(event.target.value.split('\n'));
-      }}
     />
   );
 };

@@ -8,5 +8,5 @@ Colour palette: https://coolors.co/283d3b-197278-edddd4-c44536-772e25
 
 ## TODO
 
-* Fix string <-> array mapping (empty text, blank lines).
 * Help link.
+* Saving lists (sign up/login/delete account/etc).
