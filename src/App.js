@@ -205,6 +205,10 @@ class App extends Component {
               this.dispatch(setNames(newNames));
             }}
           />
+          <div className='Hint'>
+            After entering your names, save this page to your browser bookmarks
+            for quick access to this list.
+          </div>
         </div>
       </div>
     );
