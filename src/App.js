@@ -76,12 +76,29 @@ const TitleInput = ({ value, onChange }) => {
   );
 };
 
+const calcPerspective = x => {
+  const a = 52520.53272813499;
+  const b = -8606.491632508269;
+  const c = 574.6342225406787;
+  const d = -19.2031863451813;
+  const e = 0.3196385333456;
+  const f = -0.0021159573962;
+  return Math.round(
+    a +
+    b * x +
+    c * Math.pow(x, 2) +
+    d * Math.pow(x, 3) +
+    e * Math.pow(x, 4) +
+    f * Math.pow(x, 5)
+  );
+};
+
 const Carousel = ({ selectedIndex, revolutions, children }) => {
   const total = React.Children.count(children);
   const deg = 720 * revolutions + 360 / total * selectedIndex;
-  const tz = -Math.round((200 + 20) / 2 / Math.tan(Math.PI / total));
+  const tz = -Math.round((240 + 10) / 2 / Math.tan(Math.PI / total));
   return (
-    <div className="Carousel">
+    <div className="Carousel" style={{ perspective: calcPerspective(total) }}>
       <div
         className="CarouselInner"
         style={{ transform: `translateZ(${tz}px) rotateY(${-deg}deg)` }}
@@ -98,7 +115,7 @@ const Carousel = ({ selectedIndex, revolutions, children }) => {
 
 const CarouselItem = ({ index, total, children }) => {
   const deg = 360 / total * index;
-  const tz = Math.round((200 + 20) / 2 / Math.tan(Math.PI / total));
+  const tz = Math.round((240 + 10) / 2 / Math.tan(Math.PI / total));
   return (
     <div
       className="CarouselItem"
@@ -114,7 +131,7 @@ const Name = ({ name, isSelected }) => {
   return (
     <div className={`Name ${isSelected ? 'Selected' : ''}`}>
       <img src={`https://robohash.org/${hash}.png?set=set1`} alt="" />
-      {name}
+      <div className="NameText">{name}</div>
     </div>
   );
 };
@@ -189,7 +206,10 @@ class App extends Component {
               this.dispatch(setNames(newNames));
             }}
           />
-          <div className='Hint'>
+          <div className="Hint">
+            {names.length} names.
+          </div>
+          <div className="Hint">
             After entering your names, save this page to your browser bookmarks
             for quick access to this list.
           </div>
