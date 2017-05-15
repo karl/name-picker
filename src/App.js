@@ -129,7 +129,7 @@ const Name = ({ name, isSelected }) => {
   const hash = md5(name);
   return (
     <div className={`Name ${isSelected ? 'Selected' : ''}`}>
-      <img src={`//robohash.org/${hash}.png?set=set1`} alt="" />
+      <img src={`https://robohash.org/${hash}.png?set=set1`} alt="" />
       {name}
     </div>
   );
