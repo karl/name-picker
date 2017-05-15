@@ -19,6 +19,7 @@ body {
 }
 
 .Title {
+  height: 2.5rem;
   font-size: 2rem;
   color: #aaa;
 }
