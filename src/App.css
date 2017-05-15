@@ -18,8 +18,13 @@ body {
   height: 100vh;
 }
 
+.Title {
+  font-size: 2rem;
+  color: #aaa;
+}
+
 .Names {
-  height: calc(100vh - 15rem);
+  height: calc(100vh - 20rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,6 +94,14 @@ body {
 
 .Editor {
   padding: 2rem;
+}
+
+.TitleInput {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.4;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 .TextArea {

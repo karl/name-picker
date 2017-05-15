@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 import createBrowserHistory from 'history/createBrowserHistory';
 import md5 from 'md5';
+import queryString from 'query-string';
 import './App.css';
 
-const divider = '|';
+const divider = '•';
 
 const history = createBrowserHistory();
-const namesParam = window.location.search.substring('?names='.length);
-const initialNames = namesParam.length > 0 ? namesParam.split(divider) : [];
+const params = queryString.parse(window.location.search);
+const namesParam = params.names;
+const initialTitle = params.title !== undefined ? params.title : '';
+let initialNames = namesParam !== undefined ? namesParam.split(divider) : [];
+
+// Support old name divider
+if (initialNames.length === 1 && initialNames[0].indexOf('|') !== -1) {
+  initialNames = initialNames[0].split('|');
+}
 
 const initialState = {
+  title: initialTitle,
   names: initialNames,
   selectedIndex: null,
   revolutions: 0,
@@ -17,6 +26,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_TITLE':
+      return {
+        ...state,
+        title: action.payload,
+      };
     case 'SET_NAMES':
       return {
         ...state,
@@ -40,17 +54,30 @@ const reducer = (state = initialState, action) => {
 
 const INIT_ACTION = { type: '@@INIT' };
 
+const setTitle = title => {
+  return { type: 'SET_TITLE', payload: title };
+};
+
+const setNames = names => {
+  return { type: 'SET_NAMES', payload: names };
+};
+
 const shuffle = () => {
   return { type: 'SHUFFLE' };
 };
 
-const setNames = names => {
-  const path = `?names=${names.join(divider)}`;
-  history.push(path);
-  return { type: 'SET_NAMES', payload: names };
-};
-
 // ---
+
+const TitleInput = ({ value, onChange }) => {
+  return (
+    <input
+      className="TitleInput"
+      placeholder="Title (optional)"
+      value={value}
+      onChange={event => onChange(event.target.value)}
+    />
+  );
+};
 
 const NameInput = ({ value, onChange }) => {
   return (
@@ -114,15 +141,29 @@ class App extends Component {
     this.state = reducer(undefined, INIT_ACTION);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state === prevState) {
+      return;
+    }
+
+    const { title, names } = this.state;
+    const params = {
+      title,
+      names: names.join(divider),
+    };
+    history.push('?' + queryString.stringify(params));
+  }
+
   dispatch(action) {
     this.setState(state => reducer(state, action));
   }
 
   render() {
-    const { names, selectedIndex, revolutions } = this.state;
+    const { title, names, selectedIndex, revolutions } = this.state;
     return (
       <div className="App">
         <div className="Picker">
+          <div className="Title">{title}</div>
           <div className="Names">
 
             {names.length === 0 &&
@@ -154,6 +195,10 @@ class App extends Component {
           </button>
         </div>
         <div className="Editor">
+          <TitleInput
+            value={title}
+            onChange={newTitle => this.dispatch(setTitle(newTitle))}
+          />
           <NameInput
             value={names}
             onChange={newNames => {
