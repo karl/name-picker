@@ -32,29 +32,6 @@ body {
   font-size: 2.5rem;
 }
 
-.Carousel {
-  position: relative;
-  width: 240px;
-  height: 300px;
-  margin: 0px auto;
-  background: #F3E9E3;
-}
-
-.CarouselInner {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 3s;
-}
-
-.CarouselItem {
-  position: absolute;
-  width: 240px;
-  height: 300px;
-  backface-visibility: hidden;
-}
-
 .Name {
   display: flex;
   flex-direction: column;
@@ -108,13 +85,5 @@ body {
   font-size: 1rem;
   line-height: 1.4;
   width: 100%;
-  margin-bottom: 1rem;
-}
-
-.TextArea {
-  font-size: 1rem;
-  line-height: 1.4;
-  width: 100%;
-  min-height: 20rem;
   margin-bottom: 1rem;
 }

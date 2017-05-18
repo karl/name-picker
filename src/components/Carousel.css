@@ -1,0 +1,22 @@
+.Carousel {
+  position: relative;
+  width: 240px;
+  height: 300px;
+  margin: 0px auto;
+  background: #F3E9E3;
+}
+
+.CarouselInner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 3s;
+}
+
+.CarouselItem {
+  position: absolute;
+  width: 240px;
+  height: 300px;
+  backface-visibility: hidden;
+}

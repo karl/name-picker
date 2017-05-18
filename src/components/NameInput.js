@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './NameInput.css';
+
 class NameInput extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ class NameInput extends React.Component {
     const { text } = this.state;
     return (
       <textarea
-        className="TextArea"
+        className="NameInput"
         placeholder="Enter names, one on each line"
         value={text}
         onChange={event => {
