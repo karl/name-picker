@@ -85,11 +85,11 @@ const calcPerspective = x => {
   const f = -0.0021159573962;
   return Math.round(
     a +
-    b * x +
-    c * Math.pow(x, 2) +
-    d * Math.pow(x, 3) +
-    e * Math.pow(x, 4) +
-    f * Math.pow(x, 5)
+      b * x +
+      c * Math.pow(x, 2) +
+      d * Math.pow(x, 3) +
+      e * Math.pow(x, 4) +
+      f * Math.pow(x, 5),
   );
 };
 
